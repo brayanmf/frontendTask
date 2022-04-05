@@ -1,0 +1,11 @@
+
+.content_form{
+    width: 50%;
+    margin: auto;
+}
+@media screen and (max-width: 600px) {
+    .content_form{
+        width: 100%;
+    }
+}
+    
