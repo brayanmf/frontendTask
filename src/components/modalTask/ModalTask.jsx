@@ -1,13 +1,8 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { useState } from "react";
+
 import { updateTask } from "../../api/index";
 
-const ModalTask = ({ objList, handleClose, show, setList, list }) => {
-  const [task, setTask] = useState({
-    name: objList.title,
-    status: objList.status,
-  });
-
+const ModalTask = ({ handleClose, show, setList, list, task, setTask }) => {
   const handleChange = (e) => {
     setTask({
       ...task,
@@ -20,7 +15,7 @@ const ModalTask = ({ objList, handleClose, show, setList, list }) => {
   const handleSubmit = (e, id) => {
     e.preventDefault();
 
-    updateTask(id, { title: task.name, status: task.status }).then((res) => {
+    updateTask(id, { title: task.title, status: task.status }).then((res) => {
       const newElement = list.map((el) => (el._id === id ? res : el));
       setList(newElement);
     });
@@ -33,25 +28,24 @@ const ModalTask = ({ objList, handleClose, show, setList, list }) => {
         <Modal.Title>Tarea</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{objList.title}</p>
+        <p>{task.title}</p>
         <Form
           className="content_form"
-          onSubmit={(e) => handleSubmit(e, objList.id)}
+          onSubmit={(e) => handleSubmit(e, task.id)}
         >
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               type="text"
               placeholder="ingrese aqui"
-              name="name"
-              value={task.name}
+              name="title"
+              value={task.title}
               onChange={handleChange}
             />
             <Form.Check
-              required
               type="checkbox"
               name="status"
               label="Completa"
-              onClick={(e) => handleClick(e)}
+              onChange={(e) => handleClick(e)}
               checked={task.status}
             />
           </Form.Group>

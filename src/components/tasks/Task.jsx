@@ -1,12 +1,5 @@
 import { Card, Button } from "react-bootstrap";
-import { useState } from "react";
-import ModalTask from "../modalTask/ModalTask";
-
-const Task = ({ objList, handleClick, handleClickDelete, setList, list }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+const Task = ({ objList, handleClick, handleClickDelete, handleShow }) => {
   return (
     <>
       <div className=" col-sm-4 ">
@@ -33,7 +26,12 @@ const Task = ({ objList, handleClick, handleClickDelete, setList, list }) => {
                   Eliminar
                 </Button>
               ) : (
-                <Button variant="warning" onClick={handleShow}>
+                <Button
+                  variant="warning"
+                  onClick={(e) => {
+                    handleShow(e, objList);
+                  }}
+                >
                   Editar
                 </Button>
               )}
@@ -41,14 +39,6 @@ const Task = ({ objList, handleClick, handleClickDelete, setList, list }) => {
           </Card.Body>
         </Card>
       </div>
-      <ModalTask
-        handleShow={handleShow}
-        handleClose={handleClose}
-        show={show}
-        objList={objList}
-        setList={setList}
-        list={list}
-      />
     </>
   );
 };
